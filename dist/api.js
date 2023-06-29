@@ -1,4 +1,3 @@
-"use strict";
 /* tslint:disable */
 /* eslint-disable */
 /**
@@ -12,41 +11,30 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
-var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
-    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
-    return new (P || (P = Promise))(function (resolve, reject) {
-        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
-        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
-        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
-        step((generator = generator.apply(thisArg, _arguments || [])).next());
-    });
-};
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.OpenAIApi = exports.OpenAIApiFactory = exports.OpenAIApiFp = exports.OpenAIApiAxiosParamCreator = exports.CreateImageRequestResponseFormatEnum = exports.CreateImageRequestSizeEnum = exports.ChatCompletionResponseMessageRoleEnum = exports.ChatCompletionRequestMessageRoleEnum = void 0;
-const axios_1 = require("axios");
+import globalAxios from 'axios';
 // Some imports not used depending on template conditions
 // @ts-ignore
-const common_1 = require("./common");
+import { DUMMY_BASE_URL, assertParamExists, setSearchParams, serializeDataIfNeeded, toPathString, createRequestFunction } from './common';
 // @ts-ignore
-const base_1 = require("./base");
-exports.ChatCompletionRequestMessageRoleEnum = {
+import { BASE_PATH, BaseAPI } from './base';
+export const ChatCompletionRequestMessageRoleEnum = {
     System: 'system',
     User: 'user',
     Assistant: 'assistant',
     Function: 'function'
 };
-exports.ChatCompletionResponseMessageRoleEnum = {
+export const ChatCompletionResponseMessageRoleEnum = {
     System: 'system',
     User: 'user',
     Assistant: 'assistant',
     Function: 'function'
 };
-exports.CreateImageRequestSizeEnum = {
+export const CreateImageRequestSizeEnum = {
     _256x256: '256x256',
     _512x512: '512x512',
     _1024x1024: '1024x1024'
 };
-exports.CreateImageRequestResponseFormatEnum = {
+export const CreateImageRequestResponseFormatEnum = {
     Url: 'url',
     B64Json: 'b64_json'
 };
@@ -54,7 +42,7 @@ exports.CreateImageRequestResponseFormatEnum = {
  * OpenAIApi - axios parameter creator
  * @export
  */
-exports.OpenAIApiAxiosParamCreator = function (configuration) {
+export const OpenAIApiAxiosParamCreator = function (configuration) {
     return {
         /**
          *
@@ -63,28 +51,28 @@ exports.OpenAIApiAxiosParamCreator = function (configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        cancelFineTune: (fineTuneId, options = {}) => __awaiter(this, void 0, void 0, function* () {
+        cancelFineTune: async (fineTuneId, options = {}) => {
             // verify required parameter 'fineTuneId' is not null or undefined
-            common_1.assertParamExists('cancelFineTune', 'fineTuneId', fineTuneId);
+            assertParamExists('cancelFineTune', 'fineTuneId', fineTuneId);
             const localVarPath = `/fine-tunes/{fine_tune_id}/cancel`
                 .replace(`{${"fine_tune_id"}}`, encodeURIComponent(String(fineTuneId)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, common_1.DUMMY_BASE_URL);
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
             if (configuration) {
                 baseOptions = configuration.baseOptions;
             }
-            const localVarRequestOptions = Object.assign(Object.assign({ method: 'POST' }, baseOptions), options);
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options };
             const localVarHeaderParameter = {};
             const localVarQueryParameter = {};
-            common_1.setSearchParams(localVarUrlObj, localVarQueryParameter);
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = Object.assign(Object.assign(Object.assign({}, localVarHeaderParameter), headersFromBaseOptions), options.headers);
+            localVarRequestOptions.headers = { ...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers };
             return {
-                url: common_1.toPathString(localVarUrlObj),
+                url: toPathString(localVarUrlObj),
                 options: localVarRequestOptions,
             };
-        }),
+        },
         /**
          *
          * @summary Answers the specified question using the provided documents and examples.  The endpoint first [searches](/docs/api-reference/searches) over provided documents or files to find relevant context. The relevant context is combined with the provided examples and question to create the prompt for [completion](/docs/api-reference/completions).
@@ -93,29 +81,29 @@ exports.OpenAIApiAxiosParamCreator = function (configuration) {
          * @deprecated
          * @throws {RequiredError}
          */
-        createAnswer: (createAnswerRequest, options = {}) => __awaiter(this, void 0, void 0, function* () {
+        createAnswer: async (createAnswerRequest, options = {}) => {
             // verify required parameter 'createAnswerRequest' is not null or undefined
-            common_1.assertParamExists('createAnswer', 'createAnswerRequest', createAnswerRequest);
+            assertParamExists('createAnswer', 'createAnswerRequest', createAnswerRequest);
             const localVarPath = `/answers`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, common_1.DUMMY_BASE_URL);
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
             if (configuration) {
                 baseOptions = configuration.baseOptions;
             }
-            const localVarRequestOptions = Object.assign(Object.assign({ method: 'POST' }, baseOptions), options);
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options };
             const localVarHeaderParameter = {};
             const localVarQueryParameter = {};
             localVarHeaderParameter['Content-Type'] = 'application/json';
-            common_1.setSearchParams(localVarUrlObj, localVarQueryParameter);
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = Object.assign(Object.assign(Object.assign({}, localVarHeaderParameter), headersFromBaseOptions), options.headers);
-            localVarRequestOptions.data = common_1.serializeDataIfNeeded(createAnswerRequest, localVarRequestOptions, configuration);
+            localVarRequestOptions.headers = { ...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers };
+            localVarRequestOptions.data = serializeDataIfNeeded(createAnswerRequest, localVarRequestOptions, configuration);
             return {
-                url: common_1.toPathString(localVarUrlObj),
+                url: toPathString(localVarUrlObj),
                 options: localVarRequestOptions,
             };
-        }),
+        },
         /**
          *
          * @summary Creates a model response for the given chat conversation.
@@ -123,29 +111,29 @@ exports.OpenAIApiAxiosParamCreator = function (configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        createChatCompletion: (createChatCompletionRequest, options = {}) => __awaiter(this, void 0, void 0, function* () {
+        createChatCompletion: async (createChatCompletionRequest, options = {}) => {
             // verify required parameter 'createChatCompletionRequest' is not null or undefined
-            common_1.assertParamExists('createChatCompletion', 'createChatCompletionRequest', createChatCompletionRequest);
+            assertParamExists('createChatCompletion', 'createChatCompletionRequest', createChatCompletionRequest);
             const localVarPath = `/chat/completions`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, common_1.DUMMY_BASE_URL);
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
             if (configuration) {
                 baseOptions = configuration.baseOptions;
             }
-            const localVarRequestOptions = Object.assign(Object.assign({ method: 'POST' }, baseOptions), options);
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options };
             const localVarHeaderParameter = {};
             const localVarQueryParameter = {};
             localVarHeaderParameter['Content-Type'] = 'application/json';
-            common_1.setSearchParams(localVarUrlObj, localVarQueryParameter);
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = Object.assign(Object.assign(Object.assign({}, localVarHeaderParameter), headersFromBaseOptions), options.headers);
-            localVarRequestOptions.data = common_1.serializeDataIfNeeded(createChatCompletionRequest, localVarRequestOptions, configuration);
+            localVarRequestOptions.headers = { ...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers };
+            localVarRequestOptions.data = serializeDataIfNeeded(createChatCompletionRequest, localVarRequestOptions, configuration);
             return {
-                url: common_1.toPathString(localVarUrlObj),
+                url: toPathString(localVarUrlObj),
                 options: localVarRequestOptions,
             };
-        }),
+        },
         /**
          *
          * @summary Classifies the specified `query` using provided examples.  The endpoint first [searches](/docs/api-reference/searches) over the labeled examples to select the ones most relevant for the particular query. Then, the relevant examples are combined with the query to construct a prompt to produce the final label via the [completions](/docs/api-reference/completions) endpoint.  Labeled examples can be provided via an uploaded `file`, or explicitly listed in the request using the `examples` parameter for quick tests and small scale use cases.
@@ -154,29 +142,29 @@ exports.OpenAIApiAxiosParamCreator = function (configuration) {
          * @deprecated
          * @throws {RequiredError}
          */
-        createClassification: (createClassificationRequest, options = {}) => __awaiter(this, void 0, void 0, function* () {
+        createClassification: async (createClassificationRequest, options = {}) => {
             // verify required parameter 'createClassificationRequest' is not null or undefined
-            common_1.assertParamExists('createClassification', 'createClassificationRequest', createClassificationRequest);
+            assertParamExists('createClassification', 'createClassificationRequest', createClassificationRequest);
             const localVarPath = `/classifications`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, common_1.DUMMY_BASE_URL);
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
             if (configuration) {
                 baseOptions = configuration.baseOptions;
             }
-            const localVarRequestOptions = Object.assign(Object.assign({ method: 'POST' }, baseOptions), options);
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options };
             const localVarHeaderParameter = {};
             const localVarQueryParameter = {};
             localVarHeaderParameter['Content-Type'] = 'application/json';
-            common_1.setSearchParams(localVarUrlObj, localVarQueryParameter);
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = Object.assign(Object.assign(Object.assign({}, localVarHeaderParameter), headersFromBaseOptions), options.headers);
-            localVarRequestOptions.data = common_1.serializeDataIfNeeded(createClassificationRequest, localVarRequestOptions, configuration);
+            localVarRequestOptions.headers = { ...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers };
+            localVarRequestOptions.data = serializeDataIfNeeded(createClassificationRequest, localVarRequestOptions, configuration);
             return {
-                url: common_1.toPathString(localVarUrlObj),
+                url: toPathString(localVarUrlObj),
                 options: localVarRequestOptions,
             };
-        }),
+        },
         /**
          *
          * @summary Creates a completion for the provided prompt and parameters.
@@ -184,29 +172,29 @@ exports.OpenAIApiAxiosParamCreator = function (configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        createCompletion: (createCompletionRequest, options = {}) => __awaiter(this, void 0, void 0, function* () {
+        createCompletion: async (createCompletionRequest, options = {}) => {
             // verify required parameter 'createCompletionRequest' is not null or undefined
-            common_1.assertParamExists('createCompletion', 'createCompletionRequest', createCompletionRequest);
+            assertParamExists('createCompletion', 'createCompletionRequest', createCompletionRequest);
             const localVarPath = `/completions`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, common_1.DUMMY_BASE_URL);
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
             if (configuration) {
                 baseOptions = configuration.baseOptions;
             }
-            const localVarRequestOptions = Object.assign(Object.assign({ method: 'POST' }, baseOptions), options);
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options };
             const localVarHeaderParameter = {};
             const localVarQueryParameter = {};
             localVarHeaderParameter['Content-Type'] = 'application/json';
-            common_1.setSearchParams(localVarUrlObj, localVarQueryParameter);
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = Object.assign(Object.assign(Object.assign({}, localVarHeaderParameter), headersFromBaseOptions), options.headers);
-            localVarRequestOptions.data = common_1.serializeDataIfNeeded(createCompletionRequest, localVarRequestOptions, configuration);
+            localVarRequestOptions.headers = { ...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers };
+            localVarRequestOptions.data = serializeDataIfNeeded(createCompletionRequest, localVarRequestOptions, configuration);
             return {
-                url: common_1.toPathString(localVarUrlObj),
+                url: toPathString(localVarUrlObj),
                 options: localVarRequestOptions,
             };
-        }),
+        },
         /**
          *
          * @summary Creates a new edit for the provided input, instruction, and parameters.
@@ -214,29 +202,29 @@ exports.OpenAIApiAxiosParamCreator = function (configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        createEdit: (createEditRequest, options = {}) => __awaiter(this, void 0, void 0, function* () {
+        createEdit: async (createEditRequest, options = {}) => {
             // verify required parameter 'createEditRequest' is not null or undefined
-            common_1.assertParamExists('createEdit', 'createEditRequest', createEditRequest);
+            assertParamExists('createEdit', 'createEditRequest', createEditRequest);
             const localVarPath = `/edits`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, common_1.DUMMY_BASE_URL);
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
             if (configuration) {
                 baseOptions = configuration.baseOptions;
             }
-            const localVarRequestOptions = Object.assign(Object.assign({ method: 'POST' }, baseOptions), options);
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options };
             const localVarHeaderParameter = {};
             const localVarQueryParameter = {};
             localVarHeaderParameter['Content-Type'] = 'application/json';
-            common_1.setSearchParams(localVarUrlObj, localVarQueryParameter);
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = Object.assign(Object.assign(Object.assign({}, localVarHeaderParameter), headersFromBaseOptions), options.headers);
-            localVarRequestOptions.data = common_1.serializeDataIfNeeded(createEditRequest, localVarRequestOptions, configuration);
+            localVarRequestOptions.headers = { ...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers };
+            localVarRequestOptions.data = serializeDataIfNeeded(createEditRequest, localVarRequestOptions, configuration);
             return {
-                url: common_1.toPathString(localVarUrlObj),
+                url: toPathString(localVarUrlObj),
                 options: localVarRequestOptions,
             };
-        }),
+        },
         /**
          *
          * @summary Creates an embedding vector representing the input text.
@@ -244,29 +232,29 @@ exports.OpenAIApiAxiosParamCreator = function (configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        createEmbedding: (createEmbeddingRequest, options = {}) => __awaiter(this, void 0, void 0, function* () {
+        createEmbedding: async (createEmbeddingRequest, options = {}) => {
             // verify required parameter 'createEmbeddingRequest' is not null or undefined
-            common_1.assertParamExists('createEmbedding', 'createEmbeddingRequest', createEmbeddingRequest);
+            assertParamExists('createEmbedding', 'createEmbeddingRequest', createEmbeddingRequest);
             const localVarPath = `/embeddings`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, common_1.DUMMY_BASE_URL);
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
             if (configuration) {
                 baseOptions = configuration.baseOptions;
             }
-            const localVarRequestOptions = Object.assign(Object.assign({ method: 'POST' }, baseOptions), options);
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options };
             const localVarHeaderParameter = {};
             const localVarQueryParameter = {};
             localVarHeaderParameter['Content-Type'] = 'application/json';
-            common_1.setSearchParams(localVarUrlObj, localVarQueryParameter);
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = Object.assign(Object.assign(Object.assign({}, localVarHeaderParameter), headersFromBaseOptions), options.headers);
-            localVarRequestOptions.data = common_1.serializeDataIfNeeded(createEmbeddingRequest, localVarRequestOptions, configuration);
+            localVarRequestOptions.headers = { ...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers };
+            localVarRequestOptions.data = serializeDataIfNeeded(createEmbeddingRequest, localVarRequestOptions, configuration);
             return {
-                url: common_1.toPathString(localVarUrlObj),
+                url: toPathString(localVarUrlObj),
                 options: localVarRequestOptions,
             };
-        }),
+        },
         /**
          *
          * @summary Upload a file that contains document(s) to be used across various endpoints/features. Currently, the size of all the files uploaded by one organization can be up to 1 GB. Please contact us if you need to increase the storage limit.
@@ -275,19 +263,19 @@ exports.OpenAIApiAxiosParamCreator = function (configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        createFile: (file, purpose, options = {}) => __awaiter(this, void 0, void 0, function* () {
+        createFile: async (file, purpose, options = {}) => {
             // verify required parameter 'file' is not null or undefined
-            common_1.assertParamExists('createFile', 'file', file);
+            assertParamExists('createFile', 'file', file);
             // verify required parameter 'purpose' is not null or undefined
-            common_1.assertParamExists('createFile', 'purpose', purpose);
+            assertParamExists('createFile', 'purpose', purpose);
             const localVarPath = `/files`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, common_1.DUMMY_BASE_URL);
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
             if (configuration) {
                 baseOptions = configuration.baseOptions;
             }
-            const localVarRequestOptions = Object.assign(Object.assign({ method: 'POST' }, baseOptions), options);
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options };
             const localVarHeaderParameter = {};
             const localVarQueryParameter = {};
             const localVarFormParams = new ((configuration && configuration.formDataCtor) || FormData)();
@@ -298,15 +286,15 @@ exports.OpenAIApiAxiosParamCreator = function (configuration) {
                 localVarFormParams.append('purpose', purpose);
             }
             localVarHeaderParameter['Content-Type'] = 'multipart/form-data';
-            common_1.setSearchParams(localVarUrlObj, localVarQueryParameter);
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = Object.assign(Object.assign(Object.assign(Object.assign({}, localVarHeaderParameter), localVarFormParams.getHeaders()), headersFromBaseOptions), options.headers);
+            localVarRequestOptions.headers = { ...localVarHeaderParameter, ...localVarFormParams.getHeaders(), ...headersFromBaseOptions, ...options.headers };
             localVarRequestOptions.data = localVarFormParams;
             return {
-                url: common_1.toPathString(localVarUrlObj),
+                url: toPathString(localVarUrlObj),
                 options: localVarRequestOptions,
             };
-        }),
+        },
         /**
          *
          * @summary Creates a job that fine-tunes a specified model from a given dataset.  Response includes details of the enqueued job including job status and the name of the fine-tuned models once complete.  [Learn more about Fine-tuning](/docs/guides/fine-tuning)
@@ -314,29 +302,29 @@ exports.OpenAIApiAxiosParamCreator = function (configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        createFineTune: (createFineTuneRequest, options = {}) => __awaiter(this, void 0, void 0, function* () {
+        createFineTune: async (createFineTuneRequest, options = {}) => {
             // verify required parameter 'createFineTuneRequest' is not null or undefined
-            common_1.assertParamExists('createFineTune', 'createFineTuneRequest', createFineTuneRequest);
+            assertParamExists('createFineTune', 'createFineTuneRequest', createFineTuneRequest);
             const localVarPath = `/fine-tunes`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, common_1.DUMMY_BASE_URL);
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
             if (configuration) {
                 baseOptions = configuration.baseOptions;
             }
-            const localVarRequestOptions = Object.assign(Object.assign({ method: 'POST' }, baseOptions), options);
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options };
             const localVarHeaderParameter = {};
             const localVarQueryParameter = {};
             localVarHeaderParameter['Content-Type'] = 'application/json';
-            common_1.setSearchParams(localVarUrlObj, localVarQueryParameter);
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = Object.assign(Object.assign(Object.assign({}, localVarHeaderParameter), headersFromBaseOptions), options.headers);
-            localVarRequestOptions.data = common_1.serializeDataIfNeeded(createFineTuneRequest, localVarRequestOptions, configuration);
+            localVarRequestOptions.headers = { ...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers };
+            localVarRequestOptions.data = serializeDataIfNeeded(createFineTuneRequest, localVarRequestOptions, configuration);
             return {
-                url: common_1.toPathString(localVarUrlObj),
+                url: toPathString(localVarUrlObj),
                 options: localVarRequestOptions,
             };
-        }),
+        },
         /**
          *
          * @summary Creates an image given a prompt.
@@ -344,29 +332,29 @@ exports.OpenAIApiAxiosParamCreator = function (configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        createImage: (createImageRequest, options = {}) => __awaiter(this, void 0, void 0, function* () {
+        createImage: async (createImageRequest, options = {}) => {
             // verify required parameter 'createImageRequest' is not null or undefined
-            common_1.assertParamExists('createImage', 'createImageRequest', createImageRequest);
+            assertParamExists('createImage', 'createImageRequest', createImageRequest);
             const localVarPath = `/images/generations`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, common_1.DUMMY_BASE_URL);
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
             if (configuration) {
                 baseOptions = configuration.baseOptions;
             }
-            const localVarRequestOptions = Object.assign(Object.assign({ method: 'POST' }, baseOptions), options);
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options };
             const localVarHeaderParameter = {};
             const localVarQueryParameter = {};
             localVarHeaderParameter['Content-Type'] = 'application/json';
-            common_1.setSearchParams(localVarUrlObj, localVarQueryParameter);
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = Object.assign(Object.assign(Object.assign({}, localVarHeaderParameter), headersFromBaseOptions), options.headers);
-            localVarRequestOptions.data = common_1.serializeDataIfNeeded(createImageRequest, localVarRequestOptions, configuration);
+            localVarRequestOptions.headers = { ...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers };
+            localVarRequestOptions.data = serializeDataIfNeeded(createImageRequest, localVarRequestOptions, configuration);
             return {
-                url: common_1.toPathString(localVarUrlObj),
+                url: toPathString(localVarUrlObj),
                 options: localVarRequestOptions,
             };
-        }),
+        },
         /**
          *
          * @summary Creates an edited or extended image given an original image and a prompt.
@@ -380,19 +368,19 @@ exports.OpenAIApiAxiosParamCreator = function (configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        createImageEdit: (image, prompt, mask, n, size, responseFormat, user, options = {}) => __awaiter(this, void 0, void 0, function* () {
+        createImageEdit: async (image, prompt, mask, n, size, responseFormat, user, options = {}) => {
             // verify required parameter 'image' is not null or undefined
-            common_1.assertParamExists('createImageEdit', 'image', image);
+            assertParamExists('createImageEdit', 'image', image);
             // verify required parameter 'prompt' is not null or undefined
-            common_1.assertParamExists('createImageEdit', 'prompt', prompt);
+            assertParamExists('createImageEdit', 'prompt', prompt);
             const localVarPath = `/images/edits`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, common_1.DUMMY_BASE_URL);
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
             if (configuration) {
                 baseOptions = configuration.baseOptions;
             }
-            const localVarRequestOptions = Object.assign(Object.assign({ method: 'POST' }, baseOptions), options);
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options };
             const localVarHeaderParameter = {};
             const localVarQueryParameter = {};
             const localVarFormParams = new ((configuration && configuration.formDataCtor) || FormData)();
@@ -418,15 +406,15 @@ exports.OpenAIApiAxiosParamCreator = function (configuration) {
                 localVarFormParams.append('user', user);
             }
             localVarHeaderParameter['Content-Type'] = 'multipart/form-data';
-            common_1.setSearchParams(localVarUrlObj, localVarQueryParameter);
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = Object.assign(Object.assign(Object.assign(Object.assign({}, localVarHeaderParameter), localVarFormParams.getHeaders()), headersFromBaseOptions), options.headers);
+            localVarRequestOptions.headers = { ...localVarHeaderParameter, ...localVarFormParams.getHeaders(), ...headersFromBaseOptions, ...options.headers };
             localVarRequestOptions.data = localVarFormParams;
             return {
-                url: common_1.toPathString(localVarUrlObj),
+                url: toPathString(localVarUrlObj),
                 options: localVarRequestOptions,
             };
-        }),
+        },
         /**
          *
          * @summary Creates a variation of a given image.
@@ -438,17 +426,17 @@ exports.OpenAIApiAxiosParamCreator = function (configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        createImageVariation: (image, n, size, responseFormat, user, options = {}) => __awaiter(this, void 0, void 0, function* () {
+        createImageVariation: async (image, n, size, responseFormat, user, options = {}) => {
             // verify required parameter 'image' is not null or undefined
-            common_1.assertParamExists('createImageVariation', 'image', image);
+            assertParamExists('createImageVariation', 'image', image);
             const localVarPath = `/images/variations`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, common_1.DUMMY_BASE_URL);
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
             if (configuration) {
                 baseOptions = configuration.baseOptions;
             }
-            const localVarRequestOptions = Object.assign(Object.assign({ method: 'POST' }, baseOptions), options);
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options };
             const localVarHeaderParameter = {};
             const localVarQueryParameter = {};
             const localVarFormParams = new ((configuration && configuration.formDataCtor) || FormData)();
@@ -468,15 +456,15 @@ exports.OpenAIApiAxiosParamCreator = function (configuration) {
                 localVarFormParams.append('user', user);
             }
             localVarHeaderParameter['Content-Type'] = 'multipart/form-data';
-            common_1.setSearchParams(localVarUrlObj, localVarQueryParameter);
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = Object.assign(Object.assign(Object.assign(Object.assign({}, localVarHeaderParameter), localVarFormParams.getHeaders()), headersFromBaseOptions), options.headers);
+            localVarRequestOptions.headers = { ...localVarHeaderParameter, ...localVarFormParams.getHeaders(), ...headersFromBaseOptions, ...options.headers };
             localVarRequestOptions.data = localVarFormParams;
             return {
-                url: common_1.toPathString(localVarUrlObj),
+                url: toPathString(localVarUrlObj),
                 options: localVarRequestOptions,
             };
-        }),
+        },
         /**
          *
          * @summary Classifies if text violates OpenAI\'s Content Policy
@@ -484,29 +472,29 @@ exports.OpenAIApiAxiosParamCreator = function (configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        createModeration: (createModerationRequest, options = {}) => __awaiter(this, void 0, void 0, function* () {
+        createModeration: async (createModerationRequest, options = {}) => {
             // verify required parameter 'createModerationRequest' is not null or undefined
-            common_1.assertParamExists('createModeration', 'createModerationRequest', createModerationRequest);
+            assertParamExists('createModeration', 'createModerationRequest', createModerationRequest);
             const localVarPath = `/moderations`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, common_1.DUMMY_BASE_URL);
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
             if (configuration) {
                 baseOptions = configuration.baseOptions;
             }
-            const localVarRequestOptions = Object.assign(Object.assign({ method: 'POST' }, baseOptions), options);
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options };
             const localVarHeaderParameter = {};
             const localVarQueryParameter = {};
             localVarHeaderParameter['Content-Type'] = 'application/json';
-            common_1.setSearchParams(localVarUrlObj, localVarQueryParameter);
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = Object.assign(Object.assign(Object.assign({}, localVarHeaderParameter), headersFromBaseOptions), options.headers);
-            localVarRequestOptions.data = common_1.serializeDataIfNeeded(createModerationRequest, localVarRequestOptions, configuration);
+            localVarRequestOptions.headers = { ...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers };
+            localVarRequestOptions.data = serializeDataIfNeeded(createModerationRequest, localVarRequestOptions, configuration);
             return {
-                url: common_1.toPathString(localVarUrlObj),
+                url: toPathString(localVarUrlObj),
                 options: localVarRequestOptions,
             };
-        }),
+        },
         /**
          *
          * @summary The search endpoint computes similarity scores between provided query and documents. Documents can be passed directly to the API if there are no more than 200 of them.  To go beyond the 200 document limit, documents can be processed offline and then used for efficient retrieval at query time. When `file` is set, the search endpoint searches over all the documents in the given file and returns up to the `max_rerank` number of documents. These documents will be returned along with their search scores.  The similarity score is a positive score that usually ranges from 0 to 300 (but can sometimes go higher), where a score above 200 usually means the document is semantically similar to the query.
@@ -516,32 +504,32 @@ exports.OpenAIApiAxiosParamCreator = function (configuration) {
          * @deprecated
          * @throws {RequiredError}
          */
-        createSearch: (engineId, createSearchRequest, options = {}) => __awaiter(this, void 0, void 0, function* () {
+        createSearch: async (engineId, createSearchRequest, options = {}) => {
             // verify required parameter 'engineId' is not null or undefined
-            common_1.assertParamExists('createSearch', 'engineId', engineId);
+            assertParamExists('createSearch', 'engineId', engineId);
             // verify required parameter 'createSearchRequest' is not null or undefined
-            common_1.assertParamExists('createSearch', 'createSearchRequest', createSearchRequest);
+            assertParamExists('createSearch', 'createSearchRequest', createSearchRequest);
             const localVarPath = `/engines/{engine_id}/search`
                 .replace(`{${"engine_id"}}`, encodeURIComponent(String(engineId)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, common_1.DUMMY_BASE_URL);
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
             if (configuration) {
                 baseOptions = configuration.baseOptions;
             }
-            const localVarRequestOptions = Object.assign(Object.assign({ method: 'POST' }, baseOptions), options);
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options };
             const localVarHeaderParameter = {};
             const localVarQueryParameter = {};
             localVarHeaderParameter['Content-Type'] = 'application/json';
-            common_1.setSearchParams(localVarUrlObj, localVarQueryParameter);
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = Object.assign(Object.assign(Object.assign({}, localVarHeaderParameter), headersFromBaseOptions), options.headers);
-            localVarRequestOptions.data = common_1.serializeDataIfNeeded(createSearchRequest, localVarRequestOptions, configuration);
+            localVarRequestOptions.headers = { ...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers };
+            localVarRequestOptions.data = serializeDataIfNeeded(createSearchRequest, localVarRequestOptions, configuration);
             return {
-                url: common_1.toPathString(localVarUrlObj),
+                url: toPathString(localVarUrlObj),
                 options: localVarRequestOptions,
             };
-        }),
+        },
         /**
          *
          * @summary Transcribes audio into the input language.
@@ -554,19 +542,19 @@ exports.OpenAIApiAxiosParamCreator = function (configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        createTranscription: (file, model, prompt, responseFormat, temperature, language, options = {}) => __awaiter(this, void 0, void 0, function* () {
+        createTranscription: async (file, model, prompt, responseFormat, temperature, language, options = {}) => {
             // verify required parameter 'file' is not null or undefined
-            common_1.assertParamExists('createTranscription', 'file', file);
+            assertParamExists('createTranscription', 'file', file);
             // verify required parameter 'model' is not null or undefined
-            common_1.assertParamExists('createTranscription', 'model', model);
+            assertParamExists('createTranscription', 'model', model);
             const localVarPath = `/audio/transcriptions`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, common_1.DUMMY_BASE_URL);
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
             if (configuration) {
                 baseOptions = configuration.baseOptions;
             }
-            const localVarRequestOptions = Object.assign(Object.assign({ method: 'POST' }, baseOptions), options);
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options };
             const localVarHeaderParameter = {};
             const localVarQueryParameter = {};
             const localVarFormParams = new ((configuration && configuration.formDataCtor) || FormData)();
@@ -589,15 +577,15 @@ exports.OpenAIApiAxiosParamCreator = function (configuration) {
                 localVarFormParams.append('language', language);
             }
             localVarHeaderParameter['Content-Type'] = 'multipart/form-data';
-            common_1.setSearchParams(localVarUrlObj, localVarQueryParameter);
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = Object.assign(Object.assign(Object.assign(Object.assign({}, localVarHeaderParameter), localVarFormParams.getHeaders()), headersFromBaseOptions), options.headers);
+            localVarRequestOptions.headers = { ...localVarHeaderParameter, ...localVarFormParams.getHeaders(), ...headersFromBaseOptions, ...options.headers };
             localVarRequestOptions.data = localVarFormParams;
             return {
-                url: common_1.toPathString(localVarUrlObj),
+                url: toPathString(localVarUrlObj),
                 options: localVarRequestOptions,
             };
-        }),
+        },
         /**
          *
          * @summary Translates audio into into English.
@@ -609,19 +597,19 @@ exports.OpenAIApiAxiosParamCreator = function (configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        createTranslation: (file, model, prompt, responseFormat, temperature, options = {}) => __awaiter(this, void 0, void 0, function* () {
+        createTranslation: async (file, model, prompt, responseFormat, temperature, options = {}) => {
             // verify required parameter 'file' is not null or undefined
-            common_1.assertParamExists('createTranslation', 'file', file);
+            assertParamExists('createTranslation', 'file', file);
             // verify required parameter 'model' is not null or undefined
-            common_1.assertParamExists('createTranslation', 'model', model);
+            assertParamExists('createTranslation', 'model', model);
             const localVarPath = `/audio/translations`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, common_1.DUMMY_BASE_URL);
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
             if (configuration) {
                 baseOptions = configuration.baseOptions;
             }
-            const localVarRequestOptions = Object.assign(Object.assign({ method: 'POST' }, baseOptions), options);
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options };
             const localVarHeaderParameter = {};
             const localVarQueryParameter = {};
             const localVarFormParams = new ((configuration && configuration.formDataCtor) || FormData)();
@@ -641,15 +629,15 @@ exports.OpenAIApiAxiosParamCreator = function (configuration) {
                 localVarFormParams.append('temperature', temperature);
             }
             localVarHeaderParameter['Content-Type'] = 'multipart/form-data';
-            common_1.setSearchParams(localVarUrlObj, localVarQueryParameter);
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = Object.assign(Object.assign(Object.assign(Object.assign({}, localVarHeaderParameter), localVarFormParams.getHeaders()), headersFromBaseOptions), options.headers);
+            localVarRequestOptions.headers = { ...localVarHeaderParameter, ...localVarFormParams.getHeaders(), ...headersFromBaseOptions, ...options.headers };
             localVarRequestOptions.data = localVarFormParams;
             return {
-                url: common_1.toPathString(localVarUrlObj),
+                url: toPathString(localVarUrlObj),
                 options: localVarRequestOptions,
             };
-        }),
+        },
         /**
          *
          * @summary Delete a file.
@@ -657,28 +645,28 @@ exports.OpenAIApiAxiosParamCreator = function (configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deleteFile: (fileId, options = {}) => __awaiter(this, void 0, void 0, function* () {
+        deleteFile: async (fileId, options = {}) => {
             // verify required parameter 'fileId' is not null or undefined
-            common_1.assertParamExists('deleteFile', 'fileId', fileId);
+            assertParamExists('deleteFile', 'fileId', fileId);
             const localVarPath = `/files/{file_id}`
                 .replace(`{${"file_id"}}`, encodeURIComponent(String(fileId)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, common_1.DUMMY_BASE_URL);
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
             if (configuration) {
                 baseOptions = configuration.baseOptions;
             }
-            const localVarRequestOptions = Object.assign(Object.assign({ method: 'DELETE' }, baseOptions), options);
+            const localVarRequestOptions = { method: 'DELETE', ...baseOptions, ...options };
             const localVarHeaderParameter = {};
             const localVarQueryParameter = {};
-            common_1.setSearchParams(localVarUrlObj, localVarQueryParameter);
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = Object.assign(Object.assign(Object.assign({}, localVarHeaderParameter), headersFromBaseOptions), options.headers);
+            localVarRequestOptions.headers = { ...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers };
             return {
-                url: common_1.toPathString(localVarUrlObj),
+                url: toPathString(localVarUrlObj),
                 options: localVarRequestOptions,
             };
-        }),
+        },
         /**
          *
          * @summary Delete a fine-tuned model. You must have the Owner role in your organization.
@@ -686,28 +674,28 @@ exports.OpenAIApiAxiosParamCreator = function (configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deleteModel: (model, options = {}) => __awaiter(this, void 0, void 0, function* () {
+        deleteModel: async (model, options = {}) => {
             // verify required parameter 'model' is not null or undefined
-            common_1.assertParamExists('deleteModel', 'model', model);
+            assertParamExists('deleteModel', 'model', model);
             const localVarPath = `/models/{model}`
                 .replace(`{${"model"}}`, encodeURIComponent(String(model)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, common_1.DUMMY_BASE_URL);
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
             if (configuration) {
                 baseOptions = configuration.baseOptions;
             }
-            const localVarRequestOptions = Object.assign(Object.assign({ method: 'DELETE' }, baseOptions), options);
+            const localVarRequestOptions = { method: 'DELETE', ...baseOptions, ...options };
             const localVarHeaderParameter = {};
             const localVarQueryParameter = {};
-            common_1.setSearchParams(localVarUrlObj, localVarQueryParameter);
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = Object.assign(Object.assign(Object.assign({}, localVarHeaderParameter), headersFromBaseOptions), options.headers);
+            localVarRequestOptions.headers = { ...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers };
             return {
-                url: common_1.toPathString(localVarUrlObj),
+                url: toPathString(localVarUrlObj),
                 options: localVarRequestOptions,
             };
-        }),
+        },
         /**
          *
          * @summary Returns the contents of the specified file
@@ -715,28 +703,28 @@ exports.OpenAIApiAxiosParamCreator = function (configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        downloadFile: (fileId, options = {}) => __awaiter(this, void 0, void 0, function* () {
+        downloadFile: async (fileId, options = {}) => {
             // verify required parameter 'fileId' is not null or undefined
-            common_1.assertParamExists('downloadFile', 'fileId', fileId);
+            assertParamExists('downloadFile', 'fileId', fileId);
             const localVarPath = `/files/{file_id}/content`
                 .replace(`{${"file_id"}}`, encodeURIComponent(String(fileId)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, common_1.DUMMY_BASE_URL);
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
             if (configuration) {
                 baseOptions = configuration.baseOptions;
             }
-            const localVarRequestOptions = Object.assign(Object.assign({ method: 'GET' }, baseOptions), options);
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options };
             const localVarHeaderParameter = {};
             const localVarQueryParameter = {};
-            common_1.setSearchParams(localVarUrlObj, localVarQueryParameter);
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = Object.assign(Object.assign(Object.assign({}, localVarHeaderParameter), headersFromBaseOptions), options.headers);
+            localVarRequestOptions.headers = { ...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers };
             return {
-                url: common_1.toPathString(localVarUrlObj),
+                url: toPathString(localVarUrlObj),
                 options: localVarRequestOptions,
             };
-        }),
+        },
         /**
          *
          * @summary Lists the currently available (non-finetuned) models, and provides basic information about each one such as the owner and availability.
@@ -744,50 +732,50 @@ exports.OpenAIApiAxiosParamCreator = function (configuration) {
          * @deprecated
          * @throws {RequiredError}
          */
-        listEngines: (options = {}) => __awaiter(this, void 0, void 0, function* () {
+        listEngines: async (options = {}) => {
             const localVarPath = `/engines`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, common_1.DUMMY_BASE_URL);
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
             if (configuration) {
                 baseOptions = configuration.baseOptions;
             }
-            const localVarRequestOptions = Object.assign(Object.assign({ method: 'GET' }, baseOptions), options);
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options };
             const localVarHeaderParameter = {};
             const localVarQueryParameter = {};
-            common_1.setSearchParams(localVarUrlObj, localVarQueryParameter);
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = Object.assign(Object.assign(Object.assign({}, localVarHeaderParameter), headersFromBaseOptions), options.headers);
+            localVarRequestOptions.headers = { ...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers };
             return {
-                url: common_1.toPathString(localVarUrlObj),
+                url: toPathString(localVarUrlObj),
                 options: localVarRequestOptions,
             };
-        }),
+        },
         /**
          *
          * @summary Returns a list of files that belong to the user\'s organization.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        listFiles: (options = {}) => __awaiter(this, void 0, void 0, function* () {
+        listFiles: async (options = {}) => {
             const localVarPath = `/files`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, common_1.DUMMY_BASE_URL);
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
             if (configuration) {
                 baseOptions = configuration.baseOptions;
             }
-            const localVarRequestOptions = Object.assign(Object.assign({ method: 'GET' }, baseOptions), options);
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options };
             const localVarHeaderParameter = {};
             const localVarQueryParameter = {};
-            common_1.setSearchParams(localVarUrlObj, localVarQueryParameter);
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = Object.assign(Object.assign(Object.assign({}, localVarHeaderParameter), headersFromBaseOptions), options.headers);
+            localVarRequestOptions.headers = { ...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers };
             return {
-                url: common_1.toPathString(localVarUrlObj),
+                url: toPathString(localVarUrlObj),
                 options: localVarRequestOptions,
             };
-        }),
+        },
         /**
          *
          * @summary Get fine-grained status updates for a fine-tune job.
@@ -796,81 +784,81 @@ exports.OpenAIApiAxiosParamCreator = function (configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        listFineTuneEvents: (fineTuneId, stream, options = {}) => __awaiter(this, void 0, void 0, function* () {
+        listFineTuneEvents: async (fineTuneId, stream, options = {}) => {
             // verify required parameter 'fineTuneId' is not null or undefined
-            common_1.assertParamExists('listFineTuneEvents', 'fineTuneId', fineTuneId);
+            assertParamExists('listFineTuneEvents', 'fineTuneId', fineTuneId);
             const localVarPath = `/fine-tunes/{fine_tune_id}/events`
                 .replace(`{${"fine_tune_id"}}`, encodeURIComponent(String(fineTuneId)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, common_1.DUMMY_BASE_URL);
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
             if (configuration) {
                 baseOptions = configuration.baseOptions;
             }
-            const localVarRequestOptions = Object.assign(Object.assign({ method: 'GET' }, baseOptions), options);
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options };
             const localVarHeaderParameter = {};
             const localVarQueryParameter = {};
             if (stream !== undefined) {
                 localVarQueryParameter['stream'] = stream;
             }
-            common_1.setSearchParams(localVarUrlObj, localVarQueryParameter);
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = Object.assign(Object.assign(Object.assign({}, localVarHeaderParameter), headersFromBaseOptions), options.headers);
+            localVarRequestOptions.headers = { ...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers };
             return {
-                url: common_1.toPathString(localVarUrlObj),
+                url: toPathString(localVarUrlObj),
                 options: localVarRequestOptions,
             };
-        }),
+        },
         /**
          *
          * @summary List your organization\'s fine-tuning jobs
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        listFineTunes: (options = {}) => __awaiter(this, void 0, void 0, function* () {
+        listFineTunes: async (options = {}) => {
             const localVarPath = `/fine-tunes`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, common_1.DUMMY_BASE_URL);
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
             if (configuration) {
                 baseOptions = configuration.baseOptions;
             }
-            const localVarRequestOptions = Object.assign(Object.assign({ method: 'GET' }, baseOptions), options);
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options };
             const localVarHeaderParameter = {};
             const localVarQueryParameter = {};
-            common_1.setSearchParams(localVarUrlObj, localVarQueryParameter);
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = Object.assign(Object.assign(Object.assign({}, localVarHeaderParameter), headersFromBaseOptions), options.headers);
+            localVarRequestOptions.headers = { ...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers };
             return {
-                url: common_1.toPathString(localVarUrlObj),
+                url: toPathString(localVarUrlObj),
                 options: localVarRequestOptions,
             };
-        }),
+        },
         /**
          *
          * @summary Lists the currently available models, and provides basic information about each one such as the owner and availability.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        listModels: (options = {}) => __awaiter(this, void 0, void 0, function* () {
+        listModels: async (options = {}) => {
             const localVarPath = `/models`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, common_1.DUMMY_BASE_URL);
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
             if (configuration) {
                 baseOptions = configuration.baseOptions;
             }
-            const localVarRequestOptions = Object.assign(Object.assign({ method: 'GET' }, baseOptions), options);
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options };
             const localVarHeaderParameter = {};
             const localVarQueryParameter = {};
-            common_1.setSearchParams(localVarUrlObj, localVarQueryParameter);
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = Object.assign(Object.assign(Object.assign({}, localVarHeaderParameter), headersFromBaseOptions), options.headers);
+            localVarRequestOptions.headers = { ...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers };
             return {
-                url: common_1.toPathString(localVarUrlObj),
+                url: toPathString(localVarUrlObj),
                 options: localVarRequestOptions,
             };
-        }),
+        },
         /**
          *
          * @summary Retrieves a model instance, providing basic information about it such as the owner and availability.
@@ -879,28 +867,28 @@ exports.OpenAIApiAxiosParamCreator = function (configuration) {
          * @deprecated
          * @throws {RequiredError}
          */
-        retrieveEngine: (engineId, options = {}) => __awaiter(this, void 0, void 0, function* () {
+        retrieveEngine: async (engineId, options = {}) => {
             // verify required parameter 'engineId' is not null or undefined
-            common_1.assertParamExists('retrieveEngine', 'engineId', engineId);
+            assertParamExists('retrieveEngine', 'engineId', engineId);
             const localVarPath = `/engines/{engine_id}`
                 .replace(`{${"engine_id"}}`, encodeURIComponent(String(engineId)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, common_1.DUMMY_BASE_URL);
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
             if (configuration) {
                 baseOptions = configuration.baseOptions;
             }
-            const localVarRequestOptions = Object.assign(Object.assign({ method: 'GET' }, baseOptions), options);
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options };
             const localVarHeaderParameter = {};
             const localVarQueryParameter = {};
-            common_1.setSearchParams(localVarUrlObj, localVarQueryParameter);
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = Object.assign(Object.assign(Object.assign({}, localVarHeaderParameter), headersFromBaseOptions), options.headers);
+            localVarRequestOptions.headers = { ...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers };
             return {
-                url: common_1.toPathString(localVarUrlObj),
+                url: toPathString(localVarUrlObj),
                 options: localVarRequestOptions,
             };
-        }),
+        },
         /**
          *
          * @summary Returns information about a specific file.
@@ -908,28 +896,28 @@ exports.OpenAIApiAxiosParamCreator = function (configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        retrieveFile: (fileId, options = {}) => __awaiter(this, void 0, void 0, function* () {
+        retrieveFile: async (fileId, options = {}) => {
             // verify required parameter 'fileId' is not null or undefined
-            common_1.assertParamExists('retrieveFile', 'fileId', fileId);
+            assertParamExists('retrieveFile', 'fileId', fileId);
             const localVarPath = `/files/{file_id}`
                 .replace(`{${"file_id"}}`, encodeURIComponent(String(fileId)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, common_1.DUMMY_BASE_URL);
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
             if (configuration) {
                 baseOptions = configuration.baseOptions;
             }
-            const localVarRequestOptions = Object.assign(Object.assign({ method: 'GET' }, baseOptions), options);
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options };
             const localVarHeaderParameter = {};
             const localVarQueryParameter = {};
-            common_1.setSearchParams(localVarUrlObj, localVarQueryParameter);
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = Object.assign(Object.assign(Object.assign({}, localVarHeaderParameter), headersFromBaseOptions), options.headers);
+            localVarRequestOptions.headers = { ...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers };
             return {
-                url: common_1.toPathString(localVarUrlObj),
+                url: toPathString(localVarUrlObj),
                 options: localVarRequestOptions,
             };
-        }),
+        },
         /**
          *
          * @summary Gets info about the fine-tune job.  [Learn more about Fine-tuning](/docs/guides/fine-tuning)
@@ -937,28 +925,28 @@ exports.OpenAIApiAxiosParamCreator = function (configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        retrieveFineTune: (fineTuneId, options = {}) => __awaiter(this, void 0, void 0, function* () {
+        retrieveFineTune: async (fineTuneId, options = {}) => {
             // verify required parameter 'fineTuneId' is not null or undefined
-            common_1.assertParamExists('retrieveFineTune', 'fineTuneId', fineTuneId);
+            assertParamExists('retrieveFineTune', 'fineTuneId', fineTuneId);
             const localVarPath = `/fine-tunes/{fine_tune_id}`
                 .replace(`{${"fine_tune_id"}}`, encodeURIComponent(String(fineTuneId)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, common_1.DUMMY_BASE_URL);
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
             if (configuration) {
                 baseOptions = configuration.baseOptions;
             }
-            const localVarRequestOptions = Object.assign(Object.assign({ method: 'GET' }, baseOptions), options);
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options };
             const localVarHeaderParameter = {};
             const localVarQueryParameter = {};
-            common_1.setSearchParams(localVarUrlObj, localVarQueryParameter);
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = Object.assign(Object.assign(Object.assign({}, localVarHeaderParameter), headersFromBaseOptions), options.headers);
+            localVarRequestOptions.headers = { ...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers };
             return {
-                url: common_1.toPathString(localVarUrlObj),
+                url: toPathString(localVarUrlObj),
                 options: localVarRequestOptions,
             };
-        }),
+        },
         /**
          *
          * @summary Retrieves a model instance, providing basic information about the model such as the owner and permissioning.
@@ -966,36 +954,36 @@ exports.OpenAIApiAxiosParamCreator = function (configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        retrieveModel: (model, options = {}) => __awaiter(this, void 0, void 0, function* () {
+        retrieveModel: async (model, options = {}) => {
             // verify required parameter 'model' is not null or undefined
-            common_1.assertParamExists('retrieveModel', 'model', model);
+            assertParamExists('retrieveModel', 'model', model);
             const localVarPath = `/models/{model}`
                 .replace(`{${"model"}}`, encodeURIComponent(String(model)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, common_1.DUMMY_BASE_URL);
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
             if (configuration) {
                 baseOptions = configuration.baseOptions;
             }
-            const localVarRequestOptions = Object.assign(Object.assign({ method: 'GET' }, baseOptions), options);
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options };
             const localVarHeaderParameter = {};
             const localVarQueryParameter = {};
-            common_1.setSearchParams(localVarUrlObj, localVarQueryParameter);
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = Object.assign(Object.assign(Object.assign({}, localVarHeaderParameter), headersFromBaseOptions), options.headers);
+            localVarRequestOptions.headers = { ...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers };
             return {
-                url: common_1.toPathString(localVarUrlObj),
+                url: toPathString(localVarUrlObj),
                 options: localVarRequestOptions,
             };
-        }),
+        },
     };
 };
 /**
  * OpenAIApi - functional programming interface
  * @export
  */
-exports.OpenAIApiFp = function (configuration) {
-    const localVarAxiosParamCreator = exports.OpenAIApiAxiosParamCreator(configuration);
+export const OpenAIApiFp = function (configuration) {
+    const localVarAxiosParamCreator = OpenAIApiAxiosParamCreator(configuration);
     return {
         /**
          *
@@ -1004,11 +992,9 @@ exports.OpenAIApiFp = function (configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        cancelFineTune(fineTuneId, options) {
-            return __awaiter(this, void 0, void 0, function* () {
-                const localVarAxiosArgs = yield localVarAxiosParamCreator.cancelFineTune(fineTuneId, options);
-                return common_1.createRequestFunction(localVarAxiosArgs, axios_1.default, base_1.BASE_PATH, configuration);
-            });
+        async cancelFineTune(fineTuneId, options) {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.cancelFineTune(fineTuneId, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
          *
@@ -1018,11 +1004,9 @@ exports.OpenAIApiFp = function (configuration) {
          * @deprecated
          * @throws {RequiredError}
          */
-        createAnswer(createAnswerRequest, options) {
-            return __awaiter(this, void 0, void 0, function* () {
-                const localVarAxiosArgs = yield localVarAxiosParamCreator.createAnswer(createAnswerRequest, options);
-                return common_1.createRequestFunction(localVarAxiosArgs, axios_1.default, base_1.BASE_PATH, configuration);
-            });
+        async createAnswer(createAnswerRequest, options) {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.createAnswer(createAnswerRequest, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
          *
@@ -1031,11 +1015,9 @@ exports.OpenAIApiFp = function (configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        createChatCompletion(createChatCompletionRequest, options) {
-            return __awaiter(this, void 0, void 0, function* () {
-                const localVarAxiosArgs = yield localVarAxiosParamCreator.createChatCompletion(createChatCompletionRequest, options);
-                return common_1.createRequestFunction(localVarAxiosArgs, axios_1.default, base_1.BASE_PATH, configuration);
-            });
+        async createChatCompletion(createChatCompletionRequest, options) {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.createChatCompletion(createChatCompletionRequest, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
          *
@@ -1045,11 +1027,9 @@ exports.OpenAIApiFp = function (configuration) {
          * @deprecated
          * @throws {RequiredError}
          */
-        createClassification(createClassificationRequest, options) {
-            return __awaiter(this, void 0, void 0, function* () {
-                const localVarAxiosArgs = yield localVarAxiosParamCreator.createClassification(createClassificationRequest, options);
-                return common_1.createRequestFunction(localVarAxiosArgs, axios_1.default, base_1.BASE_PATH, configuration);
-            });
+        async createClassification(createClassificationRequest, options) {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.createClassification(createClassificationRequest, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
          *
@@ -1058,11 +1038,9 @@ exports.OpenAIApiFp = function (configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        createCompletion(createCompletionRequest, options) {
-            return __awaiter(this, void 0, void 0, function* () {
-                const localVarAxiosArgs = yield localVarAxiosParamCreator.createCompletion(createCompletionRequest, options);
-                return common_1.createRequestFunction(localVarAxiosArgs, axios_1.default, base_1.BASE_PATH, configuration);
-            });
+        async createCompletion(createCompletionRequest, options) {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.createCompletion(createCompletionRequest, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
          *
@@ -1071,11 +1049,9 @@ exports.OpenAIApiFp = function (configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        createEdit(createEditRequest, options) {
-            return __awaiter(this, void 0, void 0, function* () {
-                const localVarAxiosArgs = yield localVarAxiosParamCreator.createEdit(createEditRequest, options);
-                return common_1.createRequestFunction(localVarAxiosArgs, axios_1.default, base_1.BASE_PATH, configuration);
-            });
+        async createEdit(createEditRequest, options) {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.createEdit(createEditRequest, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
          *
@@ -1084,11 +1060,9 @@ exports.OpenAIApiFp = function (configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        createEmbedding(createEmbeddingRequest, options) {
-            return __awaiter(this, void 0, void 0, function* () {
-                const localVarAxiosArgs = yield localVarAxiosParamCreator.createEmbedding(createEmbeddingRequest, options);
-                return common_1.createRequestFunction(localVarAxiosArgs, axios_1.default, base_1.BASE_PATH, configuration);
-            });
+        async createEmbedding(createEmbeddingRequest, options) {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.createEmbedding(createEmbeddingRequest, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
          *
@@ -1098,11 +1072,9 @@ exports.OpenAIApiFp = function (configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        createFile(file, purpose, options) {
-            return __awaiter(this, void 0, void 0, function* () {
-                const localVarAxiosArgs = yield localVarAxiosParamCreator.createFile(file, purpose, options);
-                return common_1.createRequestFunction(localVarAxiosArgs, axios_1.default, base_1.BASE_PATH, configuration);
-            });
+        async createFile(file, purpose, options) {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.createFile(file, purpose, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
          *
@@ -1111,11 +1083,9 @@ exports.OpenAIApiFp = function (configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        createFineTune(createFineTuneRequest, options) {
-            return __awaiter(this, void 0, void 0, function* () {
-                const localVarAxiosArgs = yield localVarAxiosParamCreator.createFineTune(createFineTuneRequest, options);
-                return common_1.createRequestFunction(localVarAxiosArgs, axios_1.default, base_1.BASE_PATH, configuration);
-            });
+        async createFineTune(createFineTuneRequest, options) {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.createFineTune(createFineTuneRequest, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
          *
@@ -1124,11 +1094,9 @@ exports.OpenAIApiFp = function (configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        createImage(createImageRequest, options) {
-            return __awaiter(this, void 0, void 0, function* () {
-                const localVarAxiosArgs = yield localVarAxiosParamCreator.createImage(createImageRequest, options);
-                return common_1.createRequestFunction(localVarAxiosArgs, axios_1.default, base_1.BASE_PATH, configuration);
-            });
+        async createImage(createImageRequest, options) {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.createImage(createImageRequest, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
          *
@@ -1143,11 +1111,9 @@ exports.OpenAIApiFp = function (configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        createImageEdit(image, prompt, mask, n, size, responseFormat, user, options) {
-            return __awaiter(this, void 0, void 0, function* () {
-                const localVarAxiosArgs = yield localVarAxiosParamCreator.createImageEdit(image, prompt, mask, n, size, responseFormat, user, options);
-                return common_1.createRequestFunction(localVarAxiosArgs, axios_1.default, base_1.BASE_PATH, configuration);
-            });
+        async createImageEdit(image, prompt, mask, n, size, responseFormat, user, options) {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.createImageEdit(image, prompt, mask, n, size, responseFormat, user, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
          *
@@ -1160,11 +1126,9 @@ exports.OpenAIApiFp = function (configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        createImageVariation(image, n, size, responseFormat, user, options) {
-            return __awaiter(this, void 0, void 0, function* () {
-                const localVarAxiosArgs = yield localVarAxiosParamCreator.createImageVariation(image, n, size, responseFormat, user, options);
-                return common_1.createRequestFunction(localVarAxiosArgs, axios_1.default, base_1.BASE_PATH, configuration);
-            });
+        async createImageVariation(image, n, size, responseFormat, user, options) {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.createImageVariation(image, n, size, responseFormat, user, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
          *
@@ -1173,11 +1137,9 @@ exports.OpenAIApiFp = function (configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        createModeration(createModerationRequest, options) {
-            return __awaiter(this, void 0, void 0, function* () {
-                const localVarAxiosArgs = yield localVarAxiosParamCreator.createModeration(createModerationRequest, options);
-                return common_1.createRequestFunction(localVarAxiosArgs, axios_1.default, base_1.BASE_PATH, configuration);
-            });
+        async createModeration(createModerationRequest, options) {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.createModeration(createModerationRequest, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
          *
@@ -1188,11 +1150,9 @@ exports.OpenAIApiFp = function (configuration) {
          * @deprecated
          * @throws {RequiredError}
          */
-        createSearch(engineId, createSearchRequest, options) {
-            return __awaiter(this, void 0, void 0, function* () {
-                const localVarAxiosArgs = yield localVarAxiosParamCreator.createSearch(engineId, createSearchRequest, options);
-                return common_1.createRequestFunction(localVarAxiosArgs, axios_1.default, base_1.BASE_PATH, configuration);
-            });
+        async createSearch(engineId, createSearchRequest, options) {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.createSearch(engineId, createSearchRequest, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
          *
@@ -1206,11 +1166,9 @@ exports.OpenAIApiFp = function (configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        createTranscription(file, model, prompt, responseFormat, temperature, language, options) {
-            return __awaiter(this, void 0, void 0, function* () {
-                const localVarAxiosArgs = yield localVarAxiosParamCreator.createTranscription(file, model, prompt, responseFormat, temperature, language, options);
-                return common_1.createRequestFunction(localVarAxiosArgs, axios_1.default, base_1.BASE_PATH, configuration);
-            });
+        async createTranscription(file, model, prompt, responseFormat, temperature, language, options) {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.createTranscription(file, model, prompt, responseFormat, temperature, language, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
          *
@@ -1223,11 +1181,9 @@ exports.OpenAIApiFp = function (configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        createTranslation(file, model, prompt, responseFormat, temperature, options) {
-            return __awaiter(this, void 0, void 0, function* () {
-                const localVarAxiosArgs = yield localVarAxiosParamCreator.createTranslation(file, model, prompt, responseFormat, temperature, options);
-                return common_1.createRequestFunction(localVarAxiosArgs, axios_1.default, base_1.BASE_PATH, configuration);
-            });
+        async createTranslation(file, model, prompt, responseFormat, temperature, options) {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.createTranslation(file, model, prompt, responseFormat, temperature, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
          *
@@ -1236,11 +1192,9 @@ exports.OpenAIApiFp = function (configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deleteFile(fileId, options) {
-            return __awaiter(this, void 0, void 0, function* () {
-                const localVarAxiosArgs = yield localVarAxiosParamCreator.deleteFile(fileId, options);
-                return common_1.createRequestFunction(localVarAxiosArgs, axios_1.default, base_1.BASE_PATH, configuration);
-            });
+        async deleteFile(fileId, options) {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.deleteFile(fileId, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
          *
@@ -1249,11 +1203,9 @@ exports.OpenAIApiFp = function (configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deleteModel(model, options) {
-            return __awaiter(this, void 0, void 0, function* () {
-                const localVarAxiosArgs = yield localVarAxiosParamCreator.deleteModel(model, options);
-                return common_1.createRequestFunction(localVarAxiosArgs, axios_1.default, base_1.BASE_PATH, configuration);
-            });
+        async deleteModel(model, options) {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.deleteModel(model, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
          *
@@ -1262,11 +1214,9 @@ exports.OpenAIApiFp = function (configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        downloadFile(fileId, options) {
-            return __awaiter(this, void 0, void 0, function* () {
-                const localVarAxiosArgs = yield localVarAxiosParamCreator.downloadFile(fileId, options);
-                return common_1.createRequestFunction(localVarAxiosArgs, axios_1.default, base_1.BASE_PATH, configuration);
-            });
+        async downloadFile(fileId, options) {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.downloadFile(fileId, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
          *
@@ -1275,11 +1225,9 @@ exports.OpenAIApiFp = function (configuration) {
          * @deprecated
          * @throws {RequiredError}
          */
-        listEngines(options) {
-            return __awaiter(this, void 0, void 0, function* () {
-                const localVarAxiosArgs = yield localVarAxiosParamCreator.listEngines(options);
-                return common_1.createRequestFunction(localVarAxiosArgs, axios_1.default, base_1.BASE_PATH, configuration);
-            });
+        async listEngines(options) {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.listEngines(options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
          *
@@ -1287,11 +1235,9 @@ exports.OpenAIApiFp = function (configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        listFiles(options) {
-            return __awaiter(this, void 0, void 0, function* () {
-                const localVarAxiosArgs = yield localVarAxiosParamCreator.listFiles(options);
-                return common_1.createRequestFunction(localVarAxiosArgs, axios_1.default, base_1.BASE_PATH, configuration);
-            });
+        async listFiles(options) {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.listFiles(options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
          *
@@ -1301,11 +1247,9 @@ exports.OpenAIApiFp = function (configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        listFineTuneEvents(fineTuneId, stream, options) {
-            return __awaiter(this, void 0, void 0, function* () {
-                const localVarAxiosArgs = yield localVarAxiosParamCreator.listFineTuneEvents(fineTuneId, stream, options);
-                return common_1.createRequestFunction(localVarAxiosArgs, axios_1.default, base_1.BASE_PATH, configuration);
-            });
+        async listFineTuneEvents(fineTuneId, stream, options) {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.listFineTuneEvents(fineTuneId, stream, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
          *
@@ -1313,11 +1257,9 @@ exports.OpenAIApiFp = function (configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        listFineTunes(options) {
-            return __awaiter(this, void 0, void 0, function* () {
-                const localVarAxiosArgs = yield localVarAxiosParamCreator.listFineTunes(options);
-                return common_1.createRequestFunction(localVarAxiosArgs, axios_1.default, base_1.BASE_PATH, configuration);
-            });
+        async listFineTunes(options) {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.listFineTunes(options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
          *
@@ -1325,11 +1267,9 @@ exports.OpenAIApiFp = function (configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        listModels(options) {
-            return __awaiter(this, void 0, void 0, function* () {
-                const localVarAxiosArgs = yield localVarAxiosParamCreator.listModels(options);
-                return common_1.createRequestFunction(localVarAxiosArgs, axios_1.default, base_1.BASE_PATH, configuration);
-            });
+        async listModels(options) {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.listModels(options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
          *
@@ -1339,11 +1279,9 @@ exports.OpenAIApiFp = function (configuration) {
          * @deprecated
          * @throws {RequiredError}
          */
-        retrieveEngine(engineId, options) {
-            return __awaiter(this, void 0, void 0, function* () {
-                const localVarAxiosArgs = yield localVarAxiosParamCreator.retrieveEngine(engineId, options);
-                return common_1.createRequestFunction(localVarAxiosArgs, axios_1.default, base_1.BASE_PATH, configuration);
-            });
+        async retrieveEngine(engineId, options) {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.retrieveEngine(engineId, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
          *
@@ -1352,11 +1290,9 @@ exports.OpenAIApiFp = function (configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        retrieveFile(fileId, options) {
-            return __awaiter(this, void 0, void 0, function* () {
-                const localVarAxiosArgs = yield localVarAxiosParamCreator.retrieveFile(fileId, options);
-                return common_1.createRequestFunction(localVarAxiosArgs, axios_1.default, base_1.BASE_PATH, configuration);
-            });
+        async retrieveFile(fileId, options) {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.retrieveFile(fileId, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
          *
@@ -1365,11 +1301,9 @@ exports.OpenAIApiFp = function (configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        retrieveFineTune(fineTuneId, options) {
-            return __awaiter(this, void 0, void 0, function* () {
-                const localVarAxiosArgs = yield localVarAxiosParamCreator.retrieveFineTune(fineTuneId, options);
-                return common_1.createRequestFunction(localVarAxiosArgs, axios_1.default, base_1.BASE_PATH, configuration);
-            });
+        async retrieveFineTune(fineTuneId, options) {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.retrieveFineTune(fineTuneId, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
          *
@@ -1378,11 +1312,9 @@ exports.OpenAIApiFp = function (configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        retrieveModel(model, options) {
-            return __awaiter(this, void 0, void 0, function* () {
-                const localVarAxiosArgs = yield localVarAxiosParamCreator.retrieveModel(model, options);
-                return common_1.createRequestFunction(localVarAxiosArgs, axios_1.default, base_1.BASE_PATH, configuration);
-            });
+        async retrieveModel(model, options) {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.retrieveModel(model, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
     };
 };
@@ -1390,8 +1322,8 @@ exports.OpenAIApiFp = function (configuration) {
  * OpenAIApi - factory interface
  * @export
  */
-exports.OpenAIApiFactory = function (configuration, basePath, axios) {
-    const localVarFp = exports.OpenAIApiFp(configuration);
+export const OpenAIApiFactory = function (configuration, basePath, axios) {
+    const localVarFp = OpenAIApiFp(configuration);
     return {
         /**
          *
@@ -1704,7 +1636,7 @@ exports.OpenAIApiFactory = function (configuration, basePath, axios) {
  * @class OpenAIApi
  * @extends {BaseAPI}
  */
-class OpenAIApi extends base_1.BaseAPI {
+export class OpenAIApi extends BaseAPI {
     /**
      *
      * @summary Immediately cancel a fine-tune job.
@@ -1714,7 +1646,7 @@ class OpenAIApi extends base_1.BaseAPI {
      * @memberof OpenAIApi
      */
     cancelFineTune(fineTuneId, options) {
-        return exports.OpenAIApiFp(this.configuration).cancelFineTune(fineTuneId, options).then((request) => request(this.axios, this.basePath));
+        return OpenAIApiFp(this.configuration).cancelFineTune(fineTuneId, options).then((request) => request(this.axios, this.basePath));
     }
     /**
      *
@@ -1726,7 +1658,7 @@ class OpenAIApi extends base_1.BaseAPI {
      * @memberof OpenAIApi
      */
     createAnswer(createAnswerRequest, options) {
-        return exports.OpenAIApiFp(this.configuration).createAnswer(createAnswerRequest, options).then((request) => request(this.axios, this.basePath));
+        return OpenAIApiFp(this.configuration).createAnswer(createAnswerRequest, options).then((request) => request(this.axios, this.basePath));
     }
     /**
      *
@@ -1737,7 +1669,7 @@ class OpenAIApi extends base_1.BaseAPI {
      * @memberof OpenAIApi
      */
     createChatCompletion(createChatCompletionRequest, options) {
-        return exports.OpenAIApiFp(this.configuration).createChatCompletion(createChatCompletionRequest, options).then((request) => request(this.axios, this.basePath));
+        return OpenAIApiFp(this.configuration).createChatCompletion(createChatCompletionRequest, options).then((request) => request(this.axios, this.basePath));
     }
     /**
      *
@@ -1749,7 +1681,7 @@ class OpenAIApi extends base_1.BaseAPI {
      * @memberof OpenAIApi
      */
     createClassification(createClassificationRequest, options) {
-        return exports.OpenAIApiFp(this.configuration).createClassification(createClassificationRequest, options).then((request) => request(this.axios, this.basePath));
+        return OpenAIApiFp(this.configuration).createClassification(createClassificationRequest, options).then((request) => request(this.axios, this.basePath));
     }
     /**
      *
@@ -1760,7 +1692,7 @@ class OpenAIApi extends base_1.BaseAPI {
      * @memberof OpenAIApi
      */
     createCompletion(createCompletionRequest, options) {
-        return exports.OpenAIApiFp(this.configuration).createCompletion(createCompletionRequest, options).then((request) => request(this.axios, this.basePath));
+        return OpenAIApiFp(this.configuration).createCompletion(createCompletionRequest, options).then((request) => request(this.axios, this.basePath));
     }
     /**
      *
@@ -1771,7 +1703,7 @@ class OpenAIApi extends base_1.BaseAPI {
      * @memberof OpenAIApi
      */
     createEdit(createEditRequest, options) {
-        return exports.OpenAIApiFp(this.configuration).createEdit(createEditRequest, options).then((request) => request(this.axios, this.basePath));
+        return OpenAIApiFp(this.configuration).createEdit(createEditRequest, options).then((request) => request(this.axios, this.basePath));
     }
     /**
      *
@@ -1782,7 +1714,7 @@ class OpenAIApi extends base_1.BaseAPI {
      * @memberof OpenAIApi
      */
     createEmbedding(createEmbeddingRequest, options) {
-        return exports.OpenAIApiFp(this.configuration).createEmbedding(createEmbeddingRequest, options).then((request) => request(this.axios, this.basePath));
+        return OpenAIApiFp(this.configuration).createEmbedding(createEmbeddingRequest, options).then((request) => request(this.axios, this.basePath));
     }
     /**
      *
@@ -1794,7 +1726,7 @@ class OpenAIApi extends base_1.BaseAPI {
      * @memberof OpenAIApi
      */
     createFile(file, purpose, options) {
-        return exports.OpenAIApiFp(this.configuration).createFile(file, purpose, options).then((request) => request(this.axios, this.basePath));
+        return OpenAIApiFp(this.configuration).createFile(file, purpose, options).then((request) => request(this.axios, this.basePath));
     }
     /**
      *
@@ -1805,7 +1737,7 @@ class OpenAIApi extends base_1.BaseAPI {
      * @memberof OpenAIApi
      */
     createFineTune(createFineTuneRequest, options) {
-        return exports.OpenAIApiFp(this.configuration).createFineTune(createFineTuneRequest, options).then((request) => request(this.axios, this.basePath));
+        return OpenAIApiFp(this.configuration).createFineTune(createFineTuneRequest, options).then((request) => request(this.axios, this.basePath));
     }
     /**
      *
@@ -1816,7 +1748,7 @@ class OpenAIApi extends base_1.BaseAPI {
      * @memberof OpenAIApi
      */
     createImage(createImageRequest, options) {
-        return exports.OpenAIApiFp(this.configuration).createImage(createImageRequest, options).then((request) => request(this.axios, this.basePath));
+        return OpenAIApiFp(this.configuration).createImage(createImageRequest, options).then((request) => request(this.axios, this.basePath));
     }
     /**
      *
@@ -1833,7 +1765,7 @@ class OpenAIApi extends base_1.BaseAPI {
      * @memberof OpenAIApi
      */
     createImageEdit(image, prompt, mask, n, size, responseFormat, user, options) {
-        return exports.OpenAIApiFp(this.configuration).createImageEdit(image, prompt, mask, n, size, responseFormat, user, options).then((request) => request(this.axios, this.basePath));
+        return OpenAIApiFp(this.configuration).createImageEdit(image, prompt, mask, n, size, responseFormat, user, options).then((request) => request(this.axios, this.basePath));
     }
     /**
      *
@@ -1848,7 +1780,7 @@ class OpenAIApi extends base_1.BaseAPI {
      * @memberof OpenAIApi
      */
     createImageVariation(image, n, size, responseFormat, user, options) {
-        return exports.OpenAIApiFp(this.configuration).createImageVariation(image, n, size, responseFormat, user, options).then((request) => request(this.axios, this.basePath));
+        return OpenAIApiFp(this.configuration).createImageVariation(image, n, size, responseFormat, user, options).then((request) => request(this.axios, this.basePath));
     }
     /**
      *
@@ -1859,7 +1791,7 @@ class OpenAIApi extends base_1.BaseAPI {
      * @memberof OpenAIApi
      */
     createModeration(createModerationRequest, options) {
-        return exports.OpenAIApiFp(this.configuration).createModeration(createModerationRequest, options).then((request) => request(this.axios, this.basePath));
+        return OpenAIApiFp(this.configuration).createModeration(createModerationRequest, options).then((request) => request(this.axios, this.basePath));
     }
     /**
      *
@@ -1872,7 +1804,7 @@ class OpenAIApi extends base_1.BaseAPI {
      * @memberof OpenAIApi
      */
     createSearch(engineId, createSearchRequest, options) {
-        return exports.OpenAIApiFp(this.configuration).createSearch(engineId, createSearchRequest, options).then((request) => request(this.axios, this.basePath));
+        return OpenAIApiFp(this.configuration).createSearch(engineId, createSearchRequest, options).then((request) => request(this.axios, this.basePath));
     }
     /**
      *
@@ -1888,7 +1820,7 @@ class OpenAIApi extends base_1.BaseAPI {
      * @memberof OpenAIApi
      */
     createTranscription(file, model, prompt, responseFormat, temperature, language, options) {
-        return exports.OpenAIApiFp(this.configuration).createTranscription(file, model, prompt, responseFormat, temperature, language, options).then((request) => request(this.axios, this.basePath));
+        return OpenAIApiFp(this.configuration).createTranscription(file, model, prompt, responseFormat, temperature, language, options).then((request) => request(this.axios, this.basePath));
     }
     /**
      *
@@ -1903,7 +1835,7 @@ class OpenAIApi extends base_1.BaseAPI {
      * @memberof OpenAIApi
      */
     createTranslation(file, model, prompt, responseFormat, temperature, options) {
-        return exports.OpenAIApiFp(this.configuration).createTranslation(file, model, prompt, responseFormat, temperature, options).then((request) => request(this.axios, this.basePath));
+        return OpenAIApiFp(this.configuration).createTranslation(file, model, prompt, responseFormat, temperature, options).then((request) => request(this.axios, this.basePath));
     }
     /**
      *
@@ -1914,7 +1846,7 @@ class OpenAIApi extends base_1.BaseAPI {
      * @memberof OpenAIApi
      */
     deleteFile(fileId, options) {
-        return exports.OpenAIApiFp(this.configuration).deleteFile(fileId, options).then((request) => request(this.axios, this.basePath));
+        return OpenAIApiFp(this.configuration).deleteFile(fileId, options).then((request) => request(this.axios, this.basePath));
     }
     /**
      *
@@ -1925,7 +1857,7 @@ class OpenAIApi extends base_1.BaseAPI {
      * @memberof OpenAIApi
      */
     deleteModel(model, options) {
-        return exports.OpenAIApiFp(this.configuration).deleteModel(model, options).then((request) => request(this.axios, this.basePath));
+        return OpenAIApiFp(this.configuration).deleteModel(model, options).then((request) => request(this.axios, this.basePath));
     }
     /**
      *
@@ -1936,7 +1868,7 @@ class OpenAIApi extends base_1.BaseAPI {
      * @memberof OpenAIApi
      */
     downloadFile(fileId, options) {
-        return exports.OpenAIApiFp(this.configuration).downloadFile(fileId, options).then((request) => request(this.axios, this.basePath));
+        return OpenAIApiFp(this.configuration).downloadFile(fileId, options).then((request) => request(this.axios, this.basePath));
     }
     /**
      *
@@ -1947,7 +1879,7 @@ class OpenAIApi extends base_1.BaseAPI {
      * @memberof OpenAIApi
      */
     listEngines(options) {
-        return exports.OpenAIApiFp(this.configuration).listEngines(options).then((request) => request(this.axios, this.basePath));
+        return OpenAIApiFp(this.configuration).listEngines(options).then((request) => request(this.axios, this.basePath));
     }
     /**
      *
@@ -1957,7 +1889,7 @@ class OpenAIApi extends base_1.BaseAPI {
      * @memberof OpenAIApi
      */
     listFiles(options) {
-        return exports.OpenAIApiFp(this.configuration).listFiles(options).then((request) => request(this.axios, this.basePath));
+        return OpenAIApiFp(this.configuration).listFiles(options).then((request) => request(this.axios, this.basePath));
     }
     /**
      *
@@ -1969,7 +1901,7 @@ class OpenAIApi extends base_1.BaseAPI {
      * @memberof OpenAIApi
      */
     listFineTuneEvents(fineTuneId, stream, options) {
-        return exports.OpenAIApiFp(this.configuration).listFineTuneEvents(fineTuneId, stream, options).then((request) => request(this.axios, this.basePath));
+        return OpenAIApiFp(this.configuration).listFineTuneEvents(fineTuneId, stream, options).then((request) => request(this.axios, this.basePath));
     }
     /**
      *
@@ -1979,7 +1911,7 @@ class OpenAIApi extends base_1.BaseAPI {
      * @memberof OpenAIApi
      */
     listFineTunes(options) {
-        return exports.OpenAIApiFp(this.configuration).listFineTunes(options).then((request) => request(this.axios, this.basePath));
+        return OpenAIApiFp(this.configuration).listFineTunes(options).then((request) => request(this.axios, this.basePath));
     }
     /**
      *
@@ -1989,7 +1921,7 @@ class OpenAIApi extends base_1.BaseAPI {
      * @memberof OpenAIApi
      */
     listModels(options) {
-        return exports.OpenAIApiFp(this.configuration).listModels(options).then((request) => request(this.axios, this.basePath));
+        return OpenAIApiFp(this.configuration).listModels(options).then((request) => request(this.axios, this.basePath));
     }
     /**
      *
@@ -2001,7 +1933,7 @@ class OpenAIApi extends base_1.BaseAPI {
      * @memberof OpenAIApi
      */
     retrieveEngine(engineId, options) {
-        return exports.OpenAIApiFp(this.configuration).retrieveEngine(engineId, options).then((request) => request(this.axios, this.basePath));
+        return OpenAIApiFp(this.configuration).retrieveEngine(engineId, options).then((request) => request(this.axios, this.basePath));
     }
     /**
      *
@@ -2012,7 +1944,7 @@ class OpenAIApi extends base_1.BaseAPI {
      * @memberof OpenAIApi
      */
     retrieveFile(fileId, options) {
-        return exports.OpenAIApiFp(this.configuration).retrieveFile(fileId, options).then((request) => request(this.axios, this.basePath));
+        return OpenAIApiFp(this.configuration).retrieveFile(fileId, options).then((request) => request(this.axios, this.basePath));
     }
     /**
      *
@@ -2023,7 +1955,7 @@ class OpenAIApi extends base_1.BaseAPI {
      * @memberof OpenAIApi
      */
     retrieveFineTune(fineTuneId, options) {
-        return exports.OpenAIApiFp(this.configuration).retrieveFineTune(fineTuneId, options).then((request) => request(this.axios, this.basePath));
+        return OpenAIApiFp(this.configuration).retrieveFineTune(fineTuneId, options).then((request) => request(this.axios, this.basePath));
     }
     /**
      *
@@ -2034,7 +1966,7 @@ class OpenAIApi extends base_1.BaseAPI {
      * @memberof OpenAIApi
      */
     retrieveModel(model, options) {
-        return exports.OpenAIApiFp(this.configuration).retrieveModel(model, options).then((request) => request(this.axios, this.basePath));
+        return OpenAIApiFp(this.configuration).retrieveModel(model, options).then((request) => request(this.axios, this.basePath));
     }
 }
-exports.OpenAIApi = OpenAIApi;
+//# sourceMappingURL=api.js.map

@@ -1,17 +1,25 @@
 {
   "compilerOptions": {
+    "allowJs": true,
+    "jsx": "react",
+    "lib": [
+      "dom",
+      "dom.iterable",
+      "esnext"
+    ],
+    "sourceMap": true,
+    "target": "ES2022",
+    "module": "ES2022",
+    "outDir": "./dist",
+    "moduleResolution": "node",
     "declaration": true,
-    "target": "es6",
-    "module": "commonjs",
-    "noImplicitAny": true,
-    "outDir": "dist",
-    "rootDir": ".",
-    "typeRoots": [
-      "node_modules/@types"
-    ]
+    "baseUrl": ".",
+    "strict": true,
+    "skipLibCheck": true,
+    "resolveJsonModule": true,
+    "allowSyntheticDefaultImports": true
   },
-  "exclude": [
-    "dist",
-    "node_modules"
+  "include": [
+    "./**/*",
   ]
 }
