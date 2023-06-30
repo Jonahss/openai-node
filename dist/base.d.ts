@@ -37,9 +37,9 @@ export interface RequestArgs {
  * @class BaseAPI
  */
 export declare class BaseAPI {
-    protected basePath: string;
-    protected axios: AxiosInstance;
-    protected configuration: Configuration | undefined;
+    basePath: string;
+    axios: AxiosInstance;
+    configuration: Configuration | undefined;
     constructor(configuration?: Configuration, basePath?: string, axios?: AxiosInstance);
 }
 /**

@@ -1,4 +1,26 @@
-# OpenAI Node.js Library
+# Modified version of OpenAI's Node.js Library
+
+Updated to latest version of Axios, so Typescript types work with `axios-retry`, that way you can retry easily for rate-limiting and API outages.
+
+Use like
+```
+import retry from 'axios-retry'
+import _ from 'lodash'
+import { Configuration as OpenaiConfiguration, OpenAIApi } from 'openai'
+
+let openaiConfig = new OpenaiConfiguration({
+  apiKey: config.openai.openaiApiKey,
+})
+
+let openai = new OpenAIApi(openaiConfig);
+
+retry(openai.axios, {
+  retries: 10,
+  shouldResetTimeout: true,
+  retryDelay: retry.exponentialDelay
+})
+```
+
 
 The OpenAI Node.js library provides convenient access to the OpenAI API from Node.js applications. Most of the code in this library is generated from our [OpenAPI specification](https://github.com/openai/openai-openapi).
 
