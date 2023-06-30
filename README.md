@@ -5,8 +5,7 @@ Updated to latest version of Axios, so Typescript types work with `axios-retry`,
 Use like
 ```
 import retry from 'axios-retry'
-import _ from 'lodash'
-import { Configuration as OpenaiConfiguration, OpenAIApi } from 'openai'
+import { Configuration as OpenaiConfiguration, OpenAIApi } from 'openai-better'
 
 let openaiConfig = new OpenaiConfiguration({
   apiKey: config.openai.openaiApiKey,
