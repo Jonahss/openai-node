@@ -18,7 +18,7 @@
   ],
   "author": "jonahss",
   "license": "MIT",
-  "types": "./dist/index.d.ts",
+  "types": "./dist/index.d.mts",
   "scripts": {
     "build": "tsc"
   },

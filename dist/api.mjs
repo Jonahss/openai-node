@@ -14,9 +14,9 @@
 import globalAxios from 'axios';
 // Some imports not used depending on template conditions
 // @ts-ignore
-import { DUMMY_BASE_URL, assertParamExists, setSearchParams, serializeDataIfNeeded, toPathString, createRequestFunction } from './common';
+import { DUMMY_BASE_URL, assertParamExists, setSearchParams, serializeDataIfNeeded, toPathString, createRequestFunction } from './common.mjs';
 // @ts-ignore
-import { BASE_PATH, BaseAPI } from './base';
+import { BASE_PATH, BaseAPI } from './base.mjs';
 export const ChatCompletionRequestMessageRoleEnum = {
     System: 'system',
     User: 'user',
@@ -1969,4 +1969,4 @@ export class OpenAIApi extends BaseAPI {
         return OpenAIApiFp(this.configuration).retrieveModel(model, options).then((request) => request(this.axios, this.basePath));
     }
 }
-//# sourceMappingURL=api.js.map
+//# sourceMappingURL=api.mjs.map

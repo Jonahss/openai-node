@@ -1,5 +1,3 @@
-/* tslint:disable */
-/* eslint-disable */
 /**
  * OpenAI API
  * APIs for sampling from and fine-tuning language models
@@ -11,6 +9,5 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
-export * from "./api";
-export * from "./configuration";
-//# sourceMappingURL=index.js.map
+export * from "./api.mjs";
+export * from "./configuration.mjs";

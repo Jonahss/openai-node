@@ -9,10 +9,10 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
-import type { Configuration } from './configuration';
+import type { Configuration } from './configuration.mjs';
 import type { AxiosPromise, AxiosInstance, AxiosRequestConfig } from 'axios';
-import type { RequestArgs } from './base';
-import { BaseAPI } from './base';
+import type { RequestArgs } from './base.mjs';
+import { BaseAPI } from './base.mjs';
 /**
  *
  * @export

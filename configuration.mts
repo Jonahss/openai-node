@@ -11,9 +11,7 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
-
-
-const packageJson = require("../package.json");
+import FormData from 'form-data'
 
 export interface ConfigurationParameters {
     apiKey?: string | Promise<string> | ((name: string) => string) | ((name: string) => Promise<string>);
@@ -98,7 +96,7 @@ export class Configuration {
             this.baseOptions = {};
         }
         this.baseOptions.headers = {
-            'User-Agent': `OpenAI/NodeJS/${packageJson.version}`,
+            'User-Agent': `OpenAI/NodeJS/${process.env.npm_package_version}`,
             'Authorization': `Bearer ${this.apiKey}`,
             ...this.baseOptions.headers,
         }
@@ -106,7 +104,7 @@ export class Configuration {
             this.baseOptions.headers['OpenAI-Organization'] = this.organization;
         }
         if (!this.formDataCtor) {
-            this.formDataCtor = require("form-data");
+            this.formDataCtor = FormData;
         }
     }
 

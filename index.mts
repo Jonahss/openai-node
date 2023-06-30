@@ -13,6 +13,6 @@
  */
 
 
-export * from "./api";
-export * from "./configuration";
+export * from "./api.mjs";
+export * from "./configuration.mjs";
 
