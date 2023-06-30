@@ -1,22 +1,22 @@
 {
-  "name": "openai",
-  "version": "3.3.0",
-  "description": "Node.js library for the OpenAI API",
+  "name": "openai-better",
+  "version": "1.0.0",
+  "description": "Node.js library for the OpenAI API - updated Axios, easy to add retries using 'axios-retry'",
   "packageManager": "yarn@3.3.1",
   "type": "module",
   "main": "dist/index.mjs",
   "repository": {
     "type": "git",
-    "url": "git@github.com:openai/openai-node.git"
+    "url": "git@github.com:jonahss/openai-node.git"
   },
   "keywords": [
     "openai",
-    "open",
     "ai",
     "gpt-3",
-    "gpt3"
+    "gpt3",
+    "axios-retry"
   ],
-  "author": "OpenAI",
+  "author": "jonahss",
   "license": "MIT",
   "types": "./dist/index.d.ts",
   "scripts": {
